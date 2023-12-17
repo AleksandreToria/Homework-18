@@ -16,25 +16,18 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     private var adapter = Adapter()
 
     override fun bindViewActionListener() {
-        // Observe the data from the ViewModel and update the adapter
         observeViewModel()
     }
 
     override fun setUp() {
-        // Setup the RecyclerView
         setupRecyclerView()
-
-        // Trigger the data loading
         viewModel.getData()
     }
 
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            // Repeat the block only when the view is started
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                // Collect the data from the ViewModel's flow
                 viewModel.getData().collect { pagingData ->
-                    // Submit the new data to the adapter
                     adapter.submitData(pagingData)
                 }
             }
