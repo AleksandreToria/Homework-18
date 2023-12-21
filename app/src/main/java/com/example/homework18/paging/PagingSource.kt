@@ -4,6 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.homework18.dataclass.Data
 import com.example.homework18.service.ApiService
+import retrofit2.HttpException
+import java.io.IOException
 
 class PagingSource(private val apiService: ApiService) : PagingSource<Int, Data>() {
     override suspend fun load(
@@ -17,6 +19,10 @@ class PagingSource(private val apiService: ApiService) : PagingSource<Int, Data>
                 prevKey = null,
                 nextKey = if (page < response.totalPages) page + 1 else null
             )
+        } catch (e: HttpException) {
+            LoadResult.Error(e)
+        } catch (e: IOException) {
+            LoadResult.Error(e)
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

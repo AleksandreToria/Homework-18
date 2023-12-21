@@ -1,5 +1,6 @@
 package com.example.homework18.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -23,6 +24,7 @@ class Adapter : PagingDataAdapter<Data, RecyclerView.ViewHolder>(USER_COMPARATOR
         }
     }
 
+    @SuppressLint("SetTextI18n")
     inner class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Data) {
@@ -31,9 +33,9 @@ class Adapter : PagingDataAdapter<Data, RecyclerView.ViewHolder>(USER_COMPARATOR
                     .load(data.avatar)
                     .into(image)
 
-                email.text = data.email
-                firstName.text = data.firstName
-                lastName.text = data.lastName
+                email.text = "Email: ${data.email}"
+                firstName.text = "First name: ${data.firstName}"
+                lastName.text = "Last name: ${data.lastName}"
             }
         }
     }

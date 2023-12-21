@@ -11,8 +11,10 @@ import com.example.homework18.viewmodel.ViewModel
 import kotlinx.coroutines.launch
 
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
+    private val viewModel: ViewModel by viewModels {
+        ViewModel.Factory
+    }
 
-    private val viewModel: ViewModel by viewModels()
     private var adapter = Adapter()
 
     override fun bindViewActionListener() {
@@ -21,7 +23,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     override fun setUp() {
         setupRecyclerView()
-        viewModel.getData()
     }
 
     private fun observeViewModel() {
@@ -35,7 +36,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun setupRecyclerView() {
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = adapter
+        with(binding) {
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = adapter
+        }
     }
 }
+
